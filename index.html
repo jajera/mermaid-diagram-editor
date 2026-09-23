@@ -6,133 +6,304 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mermaid Diagram Editor</title>
     <link rel="icon" type="image/png" href="favicon.png" />
-    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Outfit:wght@600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=15">
 </head>
 
 <body>
-    <div class="container">
-        <!-- Header -->
+    <div class="app">
         <header class="header">
-            <h1>🧜‍♀️ Mermaid Diagram Editor</h1>
+            <div class="brand">
+                <h1>Mermaid Diagram Editor</h1>
+                <span class="brand-sub">visual-first · local-only</span>
+            </div>
             <div class="header-controls">
-                <a href="https://github.com/jajera/mermaid-diagram-editor" target="_blank" class="btn btn-github"
-                    title="GitHub Repository">
-                    <span class="github-text">GitHub</span>
-                    <svg class="github-icon" viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
+                <a href="https://github.com/jajera/mermaid-diagram-editor" target="_blank" rel="noopener"
+                    class="icon-btn" title="GitHub Repository" aria-label="GitHub Repository">
+                    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                         <path
-                            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                            d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z" />
                     </svg>
                 </a>
-                <button id="themeToggle" class="btn btn-icon" title="Toggle Dark/Light Mode">
-                    🌙
+                <button type="button" id="themeToggle" class="theme-toggle" aria-live="polite"
+                    title="Colour theme: auto">
+                    <svg class="icon theme-icon theme-icon-auto" viewBox="0 0 24 24" aria-hidden="true"
+                        focusable="false">
+                        <path
+                            d="M12 2v2M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715M16 12a4 4 0 0 0-4-4M19 5l-1.256 1.256M20 12h2">
+                        </path>
+                    </svg>
+                    <svg class="icon theme-icon theme-icon-light" viewBox="0 0 24 24" aria-hidden="true"
+                        focusable="false">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path
+                            d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41">
+                        </path>
+                    </svg>
+                    <svg class="icon theme-icon theme-icon-dark" viewBox="0 0 24 24" aria-hidden="true"
+                        focusable="false">
+                        <path
+                            d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401">
+                        </path>
+                    </svg>
+                    <span class="visually-hidden">Colour theme: auto</span>
                 </button>
             </div>
         </header>
 
-        <!-- Error Message Bar -->
         <div id="errorBar" class="error-bar hidden">
             <span id="errorMessage"></span>
-            <button id="closeError" class="btn-close">×</button>
+            <button type="button" id="closeError" class="btn-close" aria-label="Dismiss error">×</button>
         </div>
 
-        <!-- Main Content -->
-        <div class="main-content">
-            <!-- Sidebar -->
+        <div class="workspace">
             <aside class="sidebar">
-                <div class="section">
-                    <h3>📋 Templates</h3>
-                    <select id="templateSelect" class="template-select">
-                        <option value="">Select a template...</option>
-                        <option value="flowchart">Flowchart</option>
-                        <option value="sequence">Sequence Diagram</option>
-                        <option value="state">State Diagram</option>
-                        <option value="class">Class Diagram</option>
-                        <option value="gantt">Gantt Chart</option>
+                <section class="panel" id="palettePanel">
+                    <h2>Nodes</h2>
+                    <div class="palette" id="nodePalette">
+                        <button type="button" class="palette-btn" data-shape="rect" title="Process">Process</button>
+                        <button type="button" class="palette-btn" data-shape="diamond" title="Decision">Decision</button>
+                        <button type="button" class="palette-btn" data-shape="round" title="Rounded">Rounded</button>
+                        <button type="button" class="palette-btn" data-shape="stadium" title="Stadium">Stadium</button>
+                        <button type="button" class="palette-btn" data-shape="circle" title="Circle">Circle</button>
+                        <button type="button" class="palette-btn" data-shape="hexagon" title="Hexagon">Hexagon</button>
+                    </div>
+                    <p class="hint">Sketch nodes and links here. Mermaid lays out the real diagram.</p>
+                </section>
+
+                <section class="panel">
+                    <h2>Templates</h2>
+                    <select id="templateSelect" class="select">
+                        <option value="">Load template…</option>
+                        <optgroup label="Structure">
+                            <option value="flowchart">Flowchart</option>
+                            <option value="class">Class</option>
+                            <option value="sequence">Sequence</option>
+                            <option value="er">Entity relationship</option>
+                            <option value="state">State</option>
+                            <option value="mindmap">Mindmap</option>
+                            <option value="treeView">Tree view</option>
+                            <option value="block">Block</option>
+                            <option value="architecture">Architecture</option>
+                            <option value="c4">C4 context</option>
+                            <option value="c4container">C4 container</option>
+                            <option value="usecase">Use case</option>
+                            <option value="swimlane">Swimlane</option>
+                            <option value="agentflow">Agentflow</option>
+                        </optgroup>
+                        <optgroup label="Planning">
+                            <option value="gantt">Gantt</option>
+                            <option value="journey">User journey</option>
+                            <option value="timeline">Timeline</option>
+                            <option value="git">Git graph</option>
+                            <option value="kanban">Kanban</option>
+                            <option value="requirement">Requirement</option>
+                            <option value="ishikawa">Ishikawa</option>
+                            <option value="wardley">Wardley map</option>
+                            <option value="cynefin">Cynefin</option>
+                            <option value="eventmodeling">Event modeling</option>
+                        </optgroup>
+                        <optgroup label="Charts">
+                            <option value="pie">Pie</option>
+                            <option value="quadrant">Quadrant</option>
+                            <option value="xy">XY chart</option>
+                            <option value="sankey">Sankey</option>
+                            <option value="radar">Radar</option>
+                            <option value="treemap">Treemap</option>
+                            <option value="venn">Venn</option>
+                            <option value="packet">Packet</option>
+                        </optgroup>
+                        <optgroup label="Railroad">
+                            <option value="railroadEbnf">Railroad (EBNF)</option>
+                            <option value="railroadAbnf">Railroad (ABNF)</option>
+                            <option value="railroadPeg">Railroad (PEG)</option>
+                            <option value="railroadIr">Railroad (IR)</option>
+                        </optgroup>
                     </select>
-                </div>
+                </section>
 
-                <div class="section">
-                    <h3>🔧 Actions</h3>
-                    <button id="clearBtn" class="btn btn-secondary">Clear Editor</button>
-                    <button id="copySourceBtn" class="btn btn-secondary">Copy Source</button>
-                    <button id="copySvgBtn" class="btn btn-secondary">Copy SVG</button>
-                </div>
+                <section class="panel" id="inspectorPanel">
+                    <h2>Selected</h2>
+                    <div id="inspectorEmpty" class="muted">Select a node or edge</div>
+                    <div id="inspectorFields" class="inspector hidden">
+                        <label class="field">
+                            <span>Label</span>
+                            <input type="text" id="inspectLabel" autocomplete="off">
+                        </label>
+                        <label class="field" id="shapeField">
+                            <span>Shape</span>
+                            <select id="inspectShape" class="select">
+                                <option value="rect">Process</option>
+                                <option value="diamond">Decision</option>
+                                <option value="round">Rounded</option>
+                                <option value="stadium">Stadium</option>
+                                <option value="circle">Circle</option>
+                                <option value="hexagon">Hexagon</option>
+                            </select>
+                        </label>
+                        <div id="edgeActions" class="edge-actions hidden">
+                            <button type="button" id="reverseEdgeBtn" class="btn" title="Swap arrow direction">
+                                Reverse arrow
+                            </button>
+                        </div>
+                        <p id="edgeHint" class="muted edge-hint hidden">
+                            Drag an endpoint onto another node or port. <kbd>Del</kbd> removes the arrow.
+                        </p>
+                        <button type="button" id="deleteSelection" class="btn btn-danger">Delete</button>
+                    </div>
+                </section>
 
-                <div class="section">
-                    <h3>💾 Export</h3>
-                    <button id="exportPngBtn" class="btn btn-primary">Export PNG</button>
-                    <button id="exportSvgBtn" class="btn btn-primary">Export SVG</button>
-                </div>
+                <section class="panel">
+                    <h2>Actions</h2>
+                    <div class="btn-stack">
+                        <button type="button" id="undoBtn" class="btn">Undo</button>
+                        <button type="button" id="redoBtn" class="btn">Redo</button>
+                        <button type="button" id="clearBtn" class="btn">Clear</button>
+                        <button type="button" id="copySvgBtn" class="btn">Copy SVG</button>
+                        <button type="button" id="copySourceBtn" class="btn span-2">Copy Mermaid</button>
+                    </div>
+                </section>
 
-                <div class="section">
-                    <h3>ℹ️ Info</h3>
-                    <p class="info-text">
-                        Auto-saves every 2 seconds<br>
-                        Press Ctrl+Enter to refresh preview
-                    </p>
-                </div>
+                <section class="panel">
+                    <h2>Export</h2>
+                    <div class="btn-stack">
+                        <button type="button" id="exportPngBtn" class="btn btn-primary">PNG</button>
+                        <button type="button" id="exportSvgBtn" class="btn btn-primary">SVG</button>
+                    </div>
+                </section>
+
+                <section class="panel tip">
+                    <details>
+                        <summary>Tips</summary>
+                        <ul>
+                            <li>36 templates (structure / planning / charts / railroad) — Mermaid 12</li>
+                            <li>Flowcharts: sketch map + Mermaid result (what export draws)</li>
+                            <li>Other types: single preview + Source (no split)</li>
+                            <li>Click text on non-flowchart previews to edit</li>
+                            <li>Mermaid ignores sketch positions</li>
+                            <li>Use Flow (N↔S / E↔W) to steer flowchart layout</li>
+                            <li>Toggle Result to hide the preview; drag the divider to resize</li>
+                            <li>Export matches the Mermaid result</li>
+                            <li>Click an arrow, then drag an endpoint onto another node or port</li>
+                            <li>Drag arrow endpoints to reconnect · Reverse / Delete in the sidebar</li>
+                            <li><kbd>Del</kbd> deletes the selected node or arrow</li>
+                        </ul>
+                    </details>
+                </section>
             </aside>
 
-            <!-- Editor and Preview -->
-            <div class="editor-container">
-                <div class="editor-section">
-                    <div class="section-header">
-                        <h3>📝 Editor</h3>
-                        <div class="editor-controls">
-                            <span id="charCount" class="char-count">0 characters</span>
+            <main class="main">
+                <section id="visualView" class="view visual-view">
+                    <div class="canvas-toolbar">
+                        <span id="canvasHint" class="muted">Sketch freely · Mermaid chooses final layout</span>
+                        <div class="toolbar-actions">
+                            <label class="dir-label sketch-only" title="Influences Mermaid layout direction">
+                                <span class="dir-caption">Flow</span>
+                                <select id="directionSelect" class="select select-compact">
+                                    <option value="TD">North → South</option>
+                                    <option value="BT">South → North</option>
+                                    <option value="LR">West → East</option>
+                                    <option value="RL">East → West</option>
+                                </select>
+                            </label>
+                            <button type="button" id="snapToggle" class="btn btn-small sketch-only" aria-pressed="false"
+                                title="Snap sketch nodes to grid">Snap</button>
+                            <button type="button" id="fitBtn" class="btn btn-small sketch-only" title="Fit sketch map">Fit</button>
+                            <button type="button" id="zoomOutBtn" class="btn btn-small" title="Zoom Mermaid result out">−</button>
+                            <button type="button" id="zoomInBtn" class="btn btn-small" title="Zoom Mermaid result in">+</button>
+                            <button type="button" id="toggleResultBtn" class="btn btn-small active sketch-only" aria-pressed="true"
+                                title="Show or hide Mermaid result">Result</button>
+                            <button type="button" id="toggleSourceBtn" class="btn btn-small"
+                                title="Show or hide Mermaid source">Source</button>
                         </div>
                     </div>
-                    <textarea id="editor" placeholder="Enter your Mermaid diagram code here..."
-                        spellcheck="false"></textarea>
-                </div>
-
-                <div class="preview-section">
-                    <div class="section-header">
-                        <h3>👁️ Preview</h3>
-                        <div class="preview-controls">
-                            <button id="refreshBtn" class="btn btn-small">🔄 Refresh</button>
-                            <button id="zoomOutBtn" class="btn btn-small">🔍-</button>
-                            <button id="zoomInBtn" class="btn btn-small">🔍+</button>
+                    <p class="disclaimer" id="layoutDisclaimer">
+                        Mermaid does not keep your sketch positions. Use the sketch map to build the graph easily;
+                        the Mermaid result is what export actually draws. Steer it with
+                        <strong>Flow</strong> (north–south or east–west).
+                    </p>
+                    <div id="canvasWrap" class="canvas-wrap visual-split">
+                        <div class="structure-pane" id="structurePane">
+                            <div class="pane-label muted">
+                                <span id="sketchPaneTitle">Sketch</span>
+                                <button type="button" class="pill pill-action" id="sketchPanePill"
+                                    title="Open Mermaid source">positions ignored</button>
+                            </div>
+                            <svg id="canvas" class="canvas" tabindex="0" role="img" aria-label="Sketch map">
+                                <defs>
+                                    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7"
+                                        markerHeight="7" orient="auto-start-reverse">
+                                        <path d="M 0 0 L 10 5 L 0 10 z" class="arrow-head"></path>
+                                    </marker>
+                                </defs>
+                                <g id="world">
+                                    <g id="edges"></g>
+                                    <g id="nodes"></g>
+                                    <path id="linkPreview" class="link-preview hidden"></path>
+                                </g>
+                            </svg>
+                            <div id="rawSketchPreview" class="raw-sketch-preview hidden" aria-live="polite"></div>
                         </div>
-                    </div>
-                    <div id="preview" class="preview-pane">
-                        <div class="preview-placeholder">
-                            <p>Your Mermaid diagram will appear here</p>
-                            <p>Start typing in the editor or select a template to begin</p>
+                        <div id="splitHandle" class="split-handle" role="separator" aria-orientation="vertical"
+                            aria-label="Resize sketch and result" tabindex="0"></div>
+                        <div id="mermaidPane" class="mermaid-pane">
+                            <div class="pane-label muted">
+                                <span id="resultPaneTitle">Result</span>
+                                <button type="button" class="pill" id="resultPanePill"
+                                    title="">Mermaid layout · export</button>
+                            </div>
+                            <div id="visualPreview" class="visual-preview preview-surface">
+                                <div class="preview-placeholder">
+                                    <p>Mermaid result will appear here</p>
+                                </div>
+                            </div>
                         </div>
+                        <aside id="sourceDrawer" class="source-drawer hidden">
+                            <div class="drawer-header">
+                                <strong>Mermaid source</strong>
+                                <span class="muted" id="syncNote">from sketch graph</span>
+                            </div>
+                            <textarea id="visualSource" spellcheck="false"
+                                aria-label="Mermaid source"></textarea>
+                            <div class="drawer-actions">
+                                <span id="liveEditHint" class="muted live-edit-hint hidden">Live preview while typing</span>
+                                <button type="button" id="applySourceBtn" class="btn btn-primary btn-small">Apply to
+                                    sketch</button>
+                            </div>
+                        </aside>
                     </div>
-                </div>
-            </div>
+                </section>
+            </main>
         </div>
 
-        <!-- Status Bar -->
         <footer class="status-bar">
-            <div class="status-left">
-                <span id="lastSaved">Never saved</span>
-            </div>
-            <div class="status-right">
-                <span id="renderStatus">Ready</span>
-            </div>
+            <span id="lastSaved">Never saved</span>
+            <span id="renderStatus">Ready</span>
         </footer>
     </div>
 
-    <!-- Confirmation Modal -->
-    <div id="confirmModal" class="modal hidden">
+    <div id="inlineEdit" class="inline-edit hidden">
+        <input type="text" id="inlineEditInput" aria-label="Edit diagram text" autocomplete="off">
+    </div>
+
+    <div id="confirmModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
         <div class="modal-content">
-            <h3>Confirm Action</h3>
+            <h3 id="confirmTitle">Confirm</h3>
             <p id="confirmMessage"></p>
             <div class="modal-actions">
-                <button id="confirmCancel" class="btn btn-secondary">Cancel</button>
-                <button id="confirmOk" class="btn btn-danger">Confirm</button>
+                <button type="button" id="confirmCancel" class="btn">Cancel</button>
+                <button type="button" id="confirmOk" class="btn btn-danger">Confirm</button>
             </div>
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="libs/mermaid.min.js"></script>
+    <script src="libs/mermaid.min.js?v=12.0.0"></script>
     <script src="libs/html2canvas.min.js"></script>
     <script src="libs/FileSaver.min.js"></script>
-    <script src="script.js"></script>
+    <script src="script.js?v=21"></script>
 </body>
 
 </html>
